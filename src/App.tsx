@@ -13,7 +13,7 @@ function App() {
       <Suspense fallback="Chargement...">
           <BrowserRouter>
               <Header/>
-              <div className="flex flex-col">
+              <div className="flex flex-col flex-1">
                   <Switch>
                       <Route path='/click'><ClickingPage/></Route>
                       <Route path='/write'><WritingPage/></Route>
