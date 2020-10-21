@@ -1,7 +1,8 @@
 import React, {lazy, Suspense} from 'react';
 import './assets/App.css';
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import Header from "./component/Header/Header";
+import Error from "./component/Error/Error";
 
 const HomePage = lazy(() => import("./page/HomePage"));
 const WritingPage = lazy(() => import("./page/WritingPage"));
@@ -12,11 +13,13 @@ function App() {
       <Suspense fallback="Chargement...">
           <BrowserRouter>
               <Header/>
-              <div className="flex">
+              <div className="flex flex-col">
                   <Switch>
                       <Route path='/click'><ClickingPage/></Route>
                       <Route path='/write'><WritingPage/></Route>
-                      <Route path='/'><HomePage/></Route>
+                      <Route exact path='/'><HomePage/></Route>
+                      <Route exact path='/404'><Error code={ 404 } text='Page not found'/></Route>
+                      <Redirect to='/404'/>
                   </Switch>
               </div>
           </BrowserRouter>
