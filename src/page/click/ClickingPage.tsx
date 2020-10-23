@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import {useInterval} from "../../helpers";
+import useTimeout from "../../helpers/useTimeout";
 
 type SelectOptionType = {
     value: number,
@@ -16,29 +17,30 @@ export default function ClickingPage() {
 
     const [time, setTime] = useState<number | null>(null);
     const [max, setMax] = useState(10000);
-    const [buttonState, setButtonState] = useState(false);
     const [counter, setCounter] = useState(0);
 
-    useInterval(() => {
+    useTimeout(() => {
+        console.log('ended');
         setTime(null);
         setCounter(0);
     }, time);
 
+    const handleClick = () => {
+        if(!time){
+            setTime(max);
+        }else{
+            setCounter((prevState) => prevState + 1);
+        }
+    };
+
     return (
         <div className="container mx-auto">
-            <button onClick={() => {
-                if(!time){
-                    setTime(5000)
-                }
-                if(time){
-                    setCounter((oldCounter) => oldCounter + 1)
-                }
-            }}>launch timer</button>
-            <div>{counter}</div>
+            <button onClick={ handleClick }>Click me !</button>
+            <div>{ counter }</div>
 
-            <select onChange={(e) => setMax(parseInt(e.currentTarget.value))}>
-                { selectOptions.map(selectOption => {
-                    return <option key={selectOption.value} value={selectOption.value} >{selectOption.text}</option>
+            <select onChange={(e) => setMax( parseInt(e.currentTarget.value) )}>
+                { selectOptions.map( selectOption => {
+                    return <option key={ selectOption.value } value={ selectOption.value } >{ selectOption.text }</option>
                 }) }
             </select>
         </div>
