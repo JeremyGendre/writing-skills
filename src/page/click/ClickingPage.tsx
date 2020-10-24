@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {useInterval} from "../../helpers";
-import useTimeout from "../../helpers/useTimeout";
 
 type SelectOptionType = {
     value: number,
@@ -8,26 +7,60 @@ type SelectOptionType = {
 };
 
 const selectOptions: Array<SelectOptionType> = [
-    { value: 10000, text: '10 seconds' },
-    { value: 20000, text: '20 seconds' },
-    { value: 30000, text: '30 seconds' },
+    { value: 10, text: '10 seconds' },
+    { value: 20, text: '20 seconds' },
+    { value: 30, text: '30 seconds' },
 ];
+
+enum GAME_STATE {
+    INITIAL,
+    PROGRESSING,
+    ENDED
+}
+
+const initialState = {
+    time: null,
+    currentTimer: 0,
+    max: 10,
+    counter: 0,
+    gameState: GAME_STATE.INITIAL,
+};
 
 export default function ClickingPage() {
 
-    const [time, setTime] = useState<number | null>(null);
-    const [max, setMax] = useState(10000);
-    const [counter, setCounter] = useState(0);
+    const [time, setTime] = useState<number | null>(initialState.time);
+    const [currentTimer, setCurrentTimer] = useState(initialState.currentTimer);
+    const [max, setMax] = useState(initialState.max);
+    const [counter, setCounter] = useState(initialState.counter);
+    const [gameState, setGameState] = useState(initialState.gameState);
 
-    useTimeout(() => {
-        console.log('ended');
-        setTime(null);
-        setCounter(0);
+    useInterval(() => {
+        if(currentTimer >= max - 1){
+            end();
+        }
+        setCurrentTimer(prevState => prevState + 1);
     }, time);
+
+    const start = () => {
+        setTime(1000);
+        setGameState(GAME_STATE.PROGRESSING);
+    };
+
+    const end = () => {
+        setTime(null);
+        setGameState(GAME_STATE.ENDED);
+    };
+
+    const reset = () => {
+        setTime(initialState.time);
+        setGameState(initialState.gameState);
+        setCurrentTimer(initialState.currentTimer);
+        setCounter(initialState.counter);
+    };
 
     const handleClick = () => {
         if(!time){
-            setTime(max);
+            start();
         }else{
             setCounter((prevState) => prevState + 1);
         }
@@ -35,14 +68,24 @@ export default function ClickingPage() {
 
     return (
         <div className="container mx-auto">
-            <button onClick={ handleClick }>Click me !</button>
+            <button disabled={ gameState === GAME_STATE.ENDED } onClick={ handleClick }>Click me !</button>
             <div>{ counter }</div>
 
-            <select onChange={(e) => setMax( parseInt(e.currentTarget.value) )}>
-                { selectOptions.map( selectOption => {
-                    return <option key={ selectOption.value } value={ selectOption.value } >{ selectOption.text }</option>
-                }) }
-            </select>
+            { time !== null ? (
+                <>
+                    {currentTimer}
+                </>
+            ) : (
+                <select value={ max } onChange={(e) => setMax( parseInt(e.currentTarget.value) )}>
+                    { selectOptions.map( selectOption => {
+                        return <option key={ selectOption.value } value={ selectOption.value } >{ selectOption.text }</option>
+                    }) }
+                </select>
+            ) }
+
+            { gameState === GAME_STATE.ENDED ? (
+                <button onClick={reset}>Reset</button>
+            ) : ''}
         </div>
     );
 }
