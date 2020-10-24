@@ -27,6 +27,9 @@ module.exports = {
             },
             scale: {
                 '99' : '.99'
+            },
+            borderWidth: {
+                '6' : '6px'
             }
         },
     },

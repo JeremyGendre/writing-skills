@@ -1,71 +1,15 @@
 import React from "react";
+import {getRandomWords} from "../helpers/wordHelper";
+
 
 export default function WritingPage() {
+
+    const values = getRandomWords(50);
+    console.log(values);
+
     return (
         <div className="container mx-auto">
-            <p>writing page1</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
-            <p>writing page</p>
+            <p>{  }</p>
         </div>
     );
 }

@@ -12,3 +12,7 @@ body{
 .homepage-link:hover > img{
     transform: scale(1.2);
 }
+
+.loader{
+    border-color: transparent white;
+}

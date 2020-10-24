@@ -3,14 +3,15 @@ import './assets/App.css';
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import Header from "./component/Header/Header";
 import Error from "./component/Error/Error";
+import Loader from "./component/Loader/Loader";
 
 const HomePage = lazy(() => import("./page/HomePage"));
 const WritingPage = lazy(() => import("./page/WritingPage"));
-const ClickingPage = lazy(() => import("./page/click/ClickingPage"));
+const ClickingPage = lazy(() => import("./page/ClickingPage"));
 
 function App() {
   return (
-      <Suspense fallback="Chargement...">
+      <Suspense fallback={<Loader/>}>
           <BrowserRouter>
               <Header/>
               <div className="flex flex-col flex-1">
