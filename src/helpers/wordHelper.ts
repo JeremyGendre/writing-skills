@@ -1,13 +1,20 @@
-import { FRENCH_NAMES } from '../words';
+// @ts-ignore
+import { FRENCH_WORDS } from '../words';
 
-const DECODED_NAMES = JSON.parse(FRENCH_NAMES);
+type Word = {
+    type: string,
+    frequency: number,
+    label: string
+};
+
+const DECODED_NAMES: Array<Word> = JSON.parse(FRENCH_WORDS);
 
 /**
  * @returns string
  */
 export function getRandomWord(): string
 {
-    return DECODED_NAMES[Math.floor(Math.random() * DECODED_NAMES.length)];
+    return DECODED_NAMES[Math.floor(Math.random() * DECODED_NAMES.length)].label;
 }
 
 /**

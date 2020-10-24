@@ -18,12 +18,12 @@ const checkExactPath = (matcher: Matcher | null) => {
 export default function HeaderLink(props: Props) {
     const match = useRouteMatch(props.path);
     return (
-        <Link to={ props.path } className={(checkExactPath(match) ? 'border-white' : 'border-transparent') + " flex border-b-2 transition duration-150 px-8 py-4 hover:bg-white hover:text-black"}>
+        <Link to={ props.path } className={(checkExactPath(match) ? 'border-white' : 'border-transparent') + " flex border-b-2 transition duration-150 px-6 py-4 hover:bg-white hover:text-black"}>
             { props.icon ? (
                 <div className="my-auto mr-2">
                     { props.icon }
                 </div>
-            ) : '' }
+            ) : null }
             <div className="my-auto">
                 { props.text }
             </div>

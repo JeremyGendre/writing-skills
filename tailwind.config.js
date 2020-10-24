@@ -29,6 +29,7 @@ module.exports = {
                 '99' : '.99'
             },
             borderWidth: {
+                '1' : '1px',
                 '6' : '6px'
             }
         },
