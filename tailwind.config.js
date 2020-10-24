@@ -24,9 +24,14 @@ module.exports = {
             },
             boxShadow:{
                 'md-dark' : '2px 2px 10px gray'
+            },
+            scale: {
+                '99' : '.99'
             }
         },
     },
-    variants: {},
+    variants: {
+        scale: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    },
     plugins: [],
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {useInterval} from "../../helpers";
 
 type SelectOptionType = {
@@ -20,7 +20,7 @@ enum GAME_STATE {
 
 const initialState = {
     time: null,
-    currentTimer: 0,
+    currentTimer: 10,
     max: 10,
     counter: 0,
     gameState: GAME_STATE.INITIAL,
@@ -35,10 +35,10 @@ export default function ClickingPage() {
     const [gameState, setGameState] = useState(initialState.gameState);
 
     useInterval(() => {
-        if(currentTimer >= max - 1){
+        if(currentTimer <= 1){
             end();
         }
-        setCurrentTimer(prevState => prevState + 1);
+        setCurrentTimer(prevState => prevState - 1);
     }, time);
 
     const start = () => {
@@ -54,7 +54,7 @@ export default function ClickingPage() {
     const reset = () => {
         setTime(initialState.time);
         setGameState(initialState.gameState);
-        setCurrentTimer(initialState.currentTimer);
+        setCurrentTimer(max);
         setCounter(initialState.counter);
     };
 
@@ -66,28 +66,35 @@ export default function ClickingPage() {
         }
     };
 
-    return (
-        <div className="container mx-auto">
-            <button disabled={ gameState === GAME_STATE.ENDED } onClick={ handleClick }>Click me !</button>
-            <div>{ counter }</div>
+    useEffect(() => {
+        setCurrentTimer(max);
+    }, [max]);
 
-            { time !== null ? (
-                <>
-                    {currentTimer}
-                </>
-            ) : (
-                <select value={ max } onChange={(e) => setMax( parseInt(e.currentTarget.value) )}>
-                    { selectOptions.map( selectOption => {
-                        return <option key={ selectOption.value } value={ selectOption.value } >{ selectOption.text }</option>
-                    }) }
-                </select>
-            ) }
+    return (
+        <div className="container mx-auto flex flex-col mt-8">
+            <button className="w-full h-64 bg-gray-400 shadow-md text-gray-800 transform transition duration-150 hover:border-gray-100 border-2 focus:outline-none active:scale-99" disabled={ gameState === GAME_STATE.ENDED } onClick={ handleClick }>
+                Click me !
+                <div>{ counter }</div>
+            </button>
+            <div className="flex flex-col mx-auto mt-4">
+                { time !== null ? (
+                    <>
+                        {currentTimer}
+                    </>
+                ) : (
+                    <select className="p-2" value={ max } onChange={(e) => setMax( parseInt(e.currentTarget.value) )}>
+                        { selectOptions.map( selectOption => {
+                            return <option key={ selectOption.value } value={ selectOption.value } >{ selectOption.text }</option>
+                        }) }
+                    </select>
+                ) }
+            </div>
 
             { gameState === GAME_STATE.ENDED ? (
-                <>
-                    <div>Score : { counter/max }cps (clics per second)</div>
-                    <button onClick={reset}>Reset</button>
-                </>
+                <div className="flex flex-col mx-auto">
+                    <div className="mx-auto my-2 mt-4 border-l-2 border-r-2 border-gray-600 px-4">Score : { counter/max }cps (clics per second)</div>
+                    <button className="mx-auto my-2 select-none px-6 py-2 bg-gray-800 hover:bg-gray-100 hover:text-gray-800 text-white transition duration-150 border border hover:border-gray-800 rounded" onClick={reset}>Reset</button>
+                </div>
             ) : ''}
         </div>
     );
