@@ -84,7 +84,10 @@ export default function ClickingPage() {
             ) }
 
             { gameState === GAME_STATE.ENDED ? (
-                <button onClick={reset}>Reset</button>
+                <>
+                    <div>Score : { counter/max }cps (clics per second)</div>
+                    <button onClick={reset}>Reset</button>
+                </>
             ) : ''}
         </div>
     );
