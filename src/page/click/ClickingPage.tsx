@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {useInterval} from "../helpers";
-import {GAME_STATE} from "./HomePage";
+import {useInterval} from "../../helpers";
+import {GAME_STATE} from "../HomePage";
 
 type SelectOptionType = {
     value: number,

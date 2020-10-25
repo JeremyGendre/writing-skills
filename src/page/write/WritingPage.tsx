@@ -1,8 +1,8 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {getRandomWords} from "../helpers/wordHelper";
-import {GAME_STATE} from "./HomePage";
-import ErrorResult from "./ErrorResult";
-import {useInterval} from "../helpers";
+import {getRandomWords} from "../../helpers/wordHelper";
+import {GAME_STATE} from "../HomePage";
+import {useInterval} from "../../helpers";
+import Result from "./Result";
 
 export type WordError = {
     word: string,
@@ -127,11 +127,8 @@ export default function WritingPage() {
 
             { gameState === GAME_STATE.ENDED ? (
                 <div className="flex flex-col mx-auto">
-                    <div className="mx-auto my-2 mt-4 border-l-2 border-r-2 border-gray-600 px-4">Score : <strong className="font-bold">{ goodAnswers } WPM</strong> (words per minute)</div>
+                    <Result errors={errors} goodAnswers={goodAnswers}/>
                     <button className="mx-auto my-2 mt-4 select-none px-6 py-2 bg-gray-800 hover:bg-gray-100 focus:outline-none hover:text-gray-800 text-white transition duration-150 border border hover:border-gray-800 rounded transform active:scale-95" onClick={reset}>Reset</button>
-                    { errors.length > 0 ? (
-                        <ErrorResult errors={errors}/>
-                    ) : ''}
                 </div>
             ) : ''}
         </div>

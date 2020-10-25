@@ -31,6 +31,10 @@ module.exports = {
             borderWidth: {
                 '1' : '1px',
                 '6' : '6px'
+            },
+            maxHeight: {
+                '46' : '12rem',
+                '64' : '16rem'
             }
         },
     },

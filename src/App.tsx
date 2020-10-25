@@ -6,8 +6,8 @@ import Error from "./component/Error/Error";
 import Loader from "./component/Loader/Loader";
 
 const HomePage = lazy(() => import("./page/HomePage"));
-const WritingPage = lazy(() => import("./page/WritingPage"));
-const ClickingPage = lazy(() => import("./page/ClickingPage"));
+const WritingPage = lazy(() => import("./page/write/WritingPage"));
+const ClickingPage = lazy(() => import("./page/click/ClickingPage"));
 
 function App() {
   return (
