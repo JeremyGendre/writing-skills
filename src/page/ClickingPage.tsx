@@ -73,9 +73,9 @@ export default function ClickingPage() {
             </button>
             <div className="flex flex-col mx-auto mt-4">
                 { time !== null ? (
-                    <>
+                    <div className="text-2xl">
                         {currentTimer}
-                    </>
+                    </div>
                 ) : (
                     <select className="p-2 border border-gray-600 rounded" value={ max } onChange={(e) => setMax( parseInt(e.currentTarget.value) )}>
                         { selectOptions.map( selectOption => {

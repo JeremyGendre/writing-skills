@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {getRandomWords} from "../helpers/wordHelper";
 import {GAME_STATE} from "./HomePage";
 import ErrorResult from "./ErrorResult";
@@ -25,7 +25,7 @@ const initialState: InitialState = {
     currentIndex : 0,
     currentTimer : 60,
     goodAnswers : 0,
-    errors : [{word: 'ta gueule', answer: 'ta geule'},{word: 'ouais re', answer: 'oui re'}],
+    errors : [],
     values : [],
     gameState : GAME_STATE.INITIAL,
     currentInput: ''
@@ -41,6 +41,10 @@ export default function WritingPage() {
     const [gameState, setGameState] = useState(initialState.gameState);
     const [currentInput, setCurrentInput] = useState(initialState.currentInput);
 
+    const fetchValues = () => {
+        setValues(getRandomWords(200));
+    };
+
     useInterval(() => {
         if(currentTimer <= 1){
             end();
@@ -48,24 +52,33 @@ export default function WritingPage() {
         setCurrentTimer(prevState => prevState - 1);
     }, time);
 
-    const fetchValues = () => {
-        setValues(getRandomWords(200));
-    };
-
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        handleSubmitValue();
+    };
+
+    const handleSubmitValue = () => {
         if(currentInput === values[currentIndex]){
             setGoodAnswers(prevState => prevState + 1);
         } else {
             setErrors(prevState => [...prevState, {word: values[currentIndex], answer: currentInput}]);
         }
         setCurrentInput(initialState.currentInput);
+        setCurrentIndex(prevState => prevState + 1);
     };
 
-    const handleOnChange = (e: { currentTarget: { value: React.SetStateAction<string>; }; }) => {
-        setCurrentInput(e.currentTarget.value);
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         if(!time){
             start();
+        }
+        // @ts-ignore
+        const nativeEventData = e.nativeEvent.data;
+
+        if(nativeEventData === ' ' && currentInput !== ''){
+            handleSubmitValue();
+        }else{
+            const value = e.currentTarget.value;
+            setCurrentInput(prevState => (value !== ' ') ? value : prevState);
         }
     };
 
@@ -102,11 +115,13 @@ export default function WritingPage() {
                 <div className="text-2xl mx-4 opacity-50">{ values[currentIndex + 2] ? values[currentIndex + 2] : '' }</div>
             </div>
             <form onSubmit={handleSubmit} className="flex mt-8">
-                <input value={currentInput} required onChange={handleOnChange} type="text" className="mx-auto focus:outline-none border border-gray-400 focus:border-blue-400 px-4 py-2 rounded" placeholder="Ecrivez..."/>
+                <input disabled={gameState === GAME_STATE.ENDED} value={currentInput} required onChange={handleOnChange} type="text" className="mx-auto focus:outline-none border border-gray-400 focus:border-blue-400 px-4 py-2 rounded" placeholder="Ecrivez..."/>
             </form>
             { time ? (
-                <div className="mx-auto">
-                    {currentTimer}
+                <div className="flex mt-4">
+                    <div className="mx-auto text-2xl">
+                        {currentTimer}
+                    </div>
                 </div>
             ) : '' }
 
